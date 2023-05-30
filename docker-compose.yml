@@ -1,0 +1,29 @@
+version: "2.1"
+services:
+  provider:
+#    image: atxserver2-android-provider:latest
+    build: .
+    privileged: true
+    command: python main.py --server http://web:4000
+    networks:
+      - atxserver2_atx-network
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+  chrome:
+    image: chrome:latest
+#    build: ./chrome/
+    container_name: chrome
+    user: "apps:apps"
+    environment:
+      - VNC_SERVER_PASSWORD=123456      
+    ports:
+      - 5900:5900
+    privileged: true
+    networks:
+      - atxserver2_atx-network
+    depends_on:
+      - provider
+
+networks:
+  atxserver2_atx-network:
+    name: atxserver2_atx-network

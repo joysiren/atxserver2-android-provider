@@ -1,0 +1,1 @@
+docker build -t atxserver2-android-provider:latest .
